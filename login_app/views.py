@@ -14,7 +14,7 @@ def home(request):
     if 'user_id' not in request.session:
         return redirect('/')
     user = User.objects.get(id = request.session['user_id'])
-    genius = lyricsgenius.Genius('genius token')
+    genius = lyricsgenius.Genius('q3Hg0dfLarYZXLJpKIqTTQv1aF86ekG4-Dy9D8wnh8zwuykSjauy_WJ66z7oCt6L')
     def __init__(self: PublicAPI, time_period='day', chart_genre='all', per_page=None, page=None, text_format=None, type_='songs'):
         self.time_period='day',
         self.chart_genere='all',
@@ -24,6 +24,21 @@ def home(request):
     response = genius.charts(time_period='month',chart_genre='all',per_page=20)
     #print(json.dumps(['chart_item'][0], sort_keys=False, indent=4))
     return render(request, 'home.html',{'response':response})
+
+def all_time(request):
+    if 'user_id' not in request.session:
+        return redirect('/')
+    user = User.objects.get(id = request.session['user_id'])
+    genius = lyricsgenius.Genius('q3Hg0dfLarYZXLJpKIqTTQv1aF86ekG4-Dy9D8wnh8zwuykSjauy_WJ66z7oCt6L')
+    def __init__(self: PublicAPI, time_period='all_time', chart_genre='all', per_page=None, page=None, text_format=None, type_='songs'):
+        self.time_period='all_time',
+        self.chart_genere='all',
+        self.per_page= 20,
+        self.type_='song'
+        pass
+    response = genius.charts(time_period='all_time',chart_genre='all',per_page=20)
+    #print(json.dumps(['chart_item'][0], sort_keys=False, indent=4))
+    return redirect('/home',{'response':response})
 
 def logout(request):
     request.session.clear()
@@ -84,7 +99,7 @@ def delete_comment(request, id):
 def search(request):
     if request.method == 'POST':
         search = request.POST['search']
-        genius = lyricsgenius.Genius('genius token')
+        genius = lyricsgenius.Genius('q3Hg0dfLarYZXLJpKIqTTQv1aF86ekG4-Dy9D8wnh8zwuykSjauy_WJ66z7oCt6L')
         def __init__(self: genius.search_lyrics(search_term='', per_page=None, page=None)):
             self.search_term=''
             self.per_page=10,
@@ -95,17 +110,22 @@ def search(request):
     
 def view_lyrics(request, id):
     #problem cant seem to get target the id to diapay a selcted song
-    genius = lyricsgenius.Genius('genius token')
+    genius = lyricsgenius.Genius('q3Hg0dfLarYZXLJpKIqTTQv1aF86ekG4-Dy9D8wnh8zwuykSjauy_WJ66z7oCt6L')
     
-    song_id = genius.song(id)
-    id = [song_id['song']['id']] #if i remove this line it gives the whole api call not just the id
-    #id = 6746160  if I just put an id I get stuck in a redirect loop
+    song_id = genius.song(id, 'markdown')
+    id = song_id['song']['id'] #if i remove this line it gives the whole api call not just the id
+    #str.format('id')
+    #s = ''.join(id)
+    #j = int(id)
+    
+    #id = 6746160  #if I just put an id I get stuck in a redirect loop
     
     #lyrics = genius.lyrics(id)
     #lyrics = song_lyrics.lyrics
     #response = genius.song(song_id=id)
     #print(json.dumps(request, sort_keys=False, indent=4))
-    return redirect(f'/view_lyrics/{id}')
+    response = redirect(f'/view_lyrics/{id}')
+    return response
 
 
 

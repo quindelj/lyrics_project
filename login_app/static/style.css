@@ -18,17 +18,76 @@
 .overlay {
     position: absolute;
     bottom: 0;
-    background: rgb(0, 0, 0);
-    background: rgba(0, 0, 0, 0.5); /* Black see-through */
-    color: #f1f1f1;
+    background: #4ecca3;
+    background:  rgba(78, 204, 162, 0.555); /* Black see-through */
+    color: #f2f2f2;
     width: 100%;
     transition: .5s ease;
     opacity:0;
-    color: white;
+    color: #f2f2f2;
     font-size: 20px;
     padding: 20px;
     text-align: center;
 }
 .img_con:hover .overlay {
     opacity: 1;
+}
+
+#display{
+    display: inline-flex;
+}
+
+.container{
+    background-color:#232931;
+}
+
+.navbar{
+    background-color: #4ecca3;
+}
+
+.navbar h1{
+    color: #393e46;
+}
+
+text{
+    color: #3b945e
+}
+
+a:link{
+    text-decoration: none;
+}
+
+a:link, a:visited{
+    color: #f2f2f2
+}
+
+a:hover{
+    color: #3b945e;
+}
+
+a:active{
+    color: #65CCB8;
+}
+
+.form-label{
+    color: #f2f2f2;
+}
+
+.form-control{
+    background-color: #3b945e;
+    border: none
+}
+
+.form.control.col-10{
+    height: 40px;
+}
+
+.btn{
+    background-color: #f2f2f2;
+    color: #65CCB8;
+}
+
+.btn:hover{
+    color: #f2f2f2;
+    background-color: #4ecca3;
 }
