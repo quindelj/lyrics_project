@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Search</title>
+        <title>Lyrics</title>
         {% load static %}
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,13 +29,50 @@
                     <input class="form control col-10" type="search" name="search" placeholder="Search..">
                     <input type="submit" class="btn btn-info" value="Submit Button">
                 </form>
-                
             </div>
-            <div class="footer">
+            <div class='song_info'>
+                <img src="{{song_id.song.song_art_image_thumbnail_url}}" alt="{{song_id.song.album.full_title}}">
+                {{song_id.song.title}}
+                <a href="/like/song_id.song.id">Like</a>
+                <p>{{post.likes.count}}</p>
+            </div>
+            <div class="lyric">
                 <p>{{lyrics}}</p>
-                
-
-                
+            </div>
+            <div class='comments'>
+                <form action="/message" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="col-12">
+                            <label for="message" class="form-label">Post a message</label>
+                            <input type="text" name="message" id="message" class="form-control">
+                        </div>
+                        <button class="btn btn-success">Post a Message</button>
+                    </div>
+                    
+                </form>
+                <div id='post'>
+                    {% for post in message %}
+                    <div class='upost'>
+                        <p class='post'>{{post.message}}</p>
+                        <p class="poster">By:{{post.poster.first_name}}</p>
+                        <a href="/like/{{post.id}}">Likes</a>
+                        <p>{{post.likes.count}}</p>
+                        <form action='/add_comment/{{post.id}}' method="POST">
+                            {% csrf_token %}
+                            <div class="col-12">
+                                <label for="comment" class="form-label">Post Comment</label>
+                                <input type="text" name="conmment" id="comment" class="form-control">
+                                <button class="btn btn-success">Comment</button>
+                            </div>
+                        </form>
+                        {%for comment  in post.post_comments.all %}
+                        <p>{{comment.comment}}</p>
+                        <p>poster: {{comment.poster.first_naame}}</p>
+                        <a href="/delete/{{comment.id}}">Delete</a>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
