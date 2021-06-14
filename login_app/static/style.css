@@ -41,6 +41,10 @@
     background-color:#232931;
 }
 
+.wrapper{
+    background-color: #0d1117;
+}
+
 .navbar{
     background-color: #4ecca3;
 }
@@ -74,7 +78,7 @@ a:active{
 }
 
 .form-control{
-    background-color: #3b945e;
+    background-color: #0d1117;
     border: none
 }
 
@@ -90,4 +94,10 @@ a:active{
 .btn:hover{
     color: #f2f2f2;
     background-color: #4ecca3;
+}
+
+@media only screen and (max-width:500px){
+    .navbar{
+        width: 100%;
+    }
 }

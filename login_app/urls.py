@@ -13,7 +13,7 @@ urlpatterns = [
     path('add_comment/<int:id>', views.post_comment),
     path('like/<int:id>', views.add_like),
     path('delete/<int:id>', views.delete_comment),
-    #path('view_lyrics/<int:id>', views.view_lyrics),
-    path('view_lyrics/<int:id>', view_lyrics ),
+    path('view_lyrics/<int:id>', views.view_lyrics),
+    #path('view_lyrics/<int:id>', view_lyrics ),
     path('all_time', views.all_time)
 ]
