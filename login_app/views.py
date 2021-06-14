@@ -1,4 +1,4 @@
-from django.http import response
+from django.http import response, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib import messages 
 from . models import *
@@ -38,7 +38,7 @@ def all_time(request):
         pass
     response = genius.charts(time_period='all_time',chart_genre='all',per_page=20)
     #print(json.dumps(['chart_item'][0], sort_keys=False, indent=4))
-    return redirect('/home',{'response':response})
+    return render(request, 'home.html',{'response':response})
 
 def logout(request):
     request.session.clear()
@@ -56,7 +56,7 @@ def register(request):
     else: 
         new_user = User.objects.register(request.POST)
         request.session['user_id'] = new_user.id
-        messages.success(request, 'You have successfully registures!')
+        messages.success(request, 'You have successfully registered!')
         return redirect('/')
     
     return redirect('/')
@@ -72,24 +72,51 @@ def login(request):
     messages.success(request, "You have successfully logged in!")
     return redirect('/home')
 
-def message(request):
-    message = request.POST['message']
-    poster = User.objects.get(id = request.session['user_id'])
-    Message.objects.create(message=message, poster= poster)
-    return redirect('/home')
+def comment(request, song_id):
+    if request.method == 'POST':
+        comment = request.POST['comment']
+        poster = User.objects.get(id = request.session['user_id'])
+        post = Comment.objects.create(comment=comment, poster= poster)
+    #return redirect(f'/comment/view_lyrics/{song_id}')
+    return redirect(f'/partial/{post.id}')
 
-def post_comment(request, id):
+def partial_comment(request, id):
+    context = {
+        'comment': Comment.objects.get(id=id)
+    }
+    return render(request, 'partial_comment.html', context)
+
+def post_reply(request, song_id):
+    song_id = song_id
     poster = User.objects.get(id=request.session['user_id'])
-    message = Message.objects.get(id=id)
-    Comments.objects.create(comment=request.POST['comment'], poster=poster, message=message)
-    return redirect('/home')
+    comment = Comment.objects.get(id=id)
+    Reply.objects.create(reply=request.POST['reply'], poster=poster, message=message)
+    return redirect(f'{{ request.get_full_path }}')
 
 
 def add_like(request, id):
-    likes = Message.objects.get(id=id)
+    likes = Comment.objects.get(id=id)
     liked = User.objects.get(id=request.session['user_id'])
     liked.liked.add(likes)
     return redirect('/home')
+
+def fav(request, song_id):
+    #fav = song_id.get(id=id)
+    #faved = User.objects.get(id=request.session['user_id'])
+    #faved.faved.add(fav)
+    #request.GET['song_id'] = id
+    favs = Genius.objects.get_or_create(id=int(song_id))
+    fav = User.objects.get(id=request.session['user_id'])
+    fav.fav.add(favs)
+    print (favs)
+    print (faved)
+    return redirect()
+
+def profile(request, id):
+    context = {
+        'user':User.objects.get(id=id),
+    }
+    return render(request, 'profile.html', context)
 
 def delete_comment(request, id):
     destroyed = Comments.objects.get(id=id)
@@ -105,24 +132,23 @@ def search(request):
             self.per_page=10,
             self.page=2,
             
-        response = genius.search_lyrics(search, per_page=10, page=1)
-        return redirect('/search_list', {'lyric':response, 'search':search})
+        response = genius.search(search, per_page=10, page=1)
+        #print(json.dumps(response, sort_keys=False, indent=4))
+        return render(request, 'search_list.html', {'response':response, 'search':search})
     
-def view_lyrics(request, id):
-    #problem cant seem to get target the id to diapay a selcted song
-    genius = lyricsgenius.Genius('q3Hg0dfLarYZXLJpKIqTTQv1aF86ekG4-Dy9D8wnh8zwuykSjauy_WJ66z7oCt6L')
 
+def view_lyrics(request, id):
+    genius = lyricsgenius.Genius('q3Hg0dfLarYZXLJpKIqTTQv1aF86ekG4-Dy9D8wnh8zwuykSjauy_WJ66z7oCt6L')
+    
     song_id = genius.song(id )
     id = song_id['song']['id'] 
-    print(json.dumps(song_id, sort_keys=False, indent=4))
+    #print(json.dumps(song_id, sort_keys=False, indent=4))
     
     lyrics = genius.lyrics(id)
     
-    #lyrics = song_lyrics.lyrics
-    #response = genius.song(song_id=id)
-    #print(json.dumps(request, sort_keys=False, indent=4))
+    
     return render(request,"view_lyrics.html", {'lyrics':lyrics, 'song_id':song_id})
-    #return redirect(f'/view_lyrics/{id}')
+    
 
 
 

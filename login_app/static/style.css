@@ -40,7 +40,20 @@
 .container{
     background-color:#232931;
 }
-
+.lyric{
+    color: #f2f2f2;
+}
+h2{
+    color: #65CCB8;
+    font-size: 80px;
+}
+hr{
+    height: 4px;
+    color: #4ecca3;
+}
+.song_info{
+    display: flex;
+}
 .wrapper{
     background-color: #0d1117;
 }
@@ -79,7 +92,14 @@ a:active{
 
 .form-control{
     background-color: #0d1117;
+    color: #f2f2f2;
     border: none
+}
+
+.form-control:focus{
+    border: 4px solid #8ba596;
+    background-color: #0d1117;
+    color: #f2f2f2;
 }
 
 .form.control.col-10{

@@ -8,12 +8,14 @@ urlpatterns = [
     path('home', views.home),
     path('register', views.register),
     path('login', views.login),
-    path('message', views.message),
+    path('comment', views.comment),
     path('search_list', views.search),
-    path('add_comment/<int:id>', views.post_comment),
+    path('post_reply/<int:id>', views.post_reply),
     path('like/<int:id>', views.add_like),
     path('delete/<int:id>', views.delete_comment),
     path('view_lyrics/<int:id>', views.view_lyrics),
-    #path('view_lyrics/<int:id>', view_lyrics ),
-    path('all_time', views.all_time)
+    path('profile/<int:id>', views.profile),
+    path('all_time', views.all_time),
+    path('fav/<int:song_id>', views.fav),
+    path('partial_comment/<int:id>', views.partial_comment)
 ]
