@@ -72,13 +72,13 @@ def login(request):
     messages.success(request, "You have successfully logged in!")
     return redirect('/home')
 
-def comment(request, song_id):
+def comment(request):
     if request.method == 'POST':
         comment = request.POST['comment']
         poster = User.objects.get(id = request.session['user_id'])
         post = Comment.objects.create(comment=comment, poster= poster)
     #return redirect(f'/comment/view_lyrics/{song_id}')
-    return redirect(f'/partial/{post.id}')
+    return redirect(f'/partial_comment/{post.id}')
 
 def partial_comment(request, id):
     context = {
