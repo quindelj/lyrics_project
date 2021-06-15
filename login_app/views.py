@@ -105,12 +105,15 @@ def fav(request, song_id):
     #faved = User.objects.get(id=request.session['user_id'])
     #faved.faved.add(fav)
     #request.GET['song_id'] = id
-    favs = Genius.objects.get_or_create(id=int(song_id))
+    favs = Genius.objects.get(id=int(song_id))
+
+
+    
     fav = User.objects.get(id=request.session['user_id'])
-    fav.fav.add(favs)
+    favs.like.add(fav)
     print (favs)
-    print (faved)
-    return redirect()
+    #print (like)
+    return redirect('/view_lyrics/')
 
 def profile(request, id):
     context = {

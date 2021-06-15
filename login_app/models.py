@@ -23,8 +23,7 @@ class UserManager(models.Manager):
             errors["password"] = "Password should be at least 8 characters"
         if form['password'] != form['confirm']:
             errors['password'] = 'Passwords do not match'
-        if form['search'] == '':
-            errors['search'] = 'Not a valid search'
+        
         return errors
 
     def authenticate(self, email, password):
@@ -86,7 +85,7 @@ class Lyric(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class Genius(models.Model):
-    lyricsgenius
+    lyricsgenius = models.ManyToManyField(User, related_name='faved')
     like = models.ManyToManyField(User, related_name='fav')
 
 

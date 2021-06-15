@@ -14,7 +14,7 @@
     <body>
         <div class="wrapper">
             <div class="container">
-                <h1>Login or Register</h1>
+                <h1 class='title'>Login or Register</h1>
                 {% if messages %}
                 <ul class="messages">    
                     {% for message in messages %}    
@@ -41,11 +41,11 @@
                                 </div>
                                 <div class="col-12">
                                     <label for="password" class="form-label">Password</label>
-                                    <input name="password" id="password" id="password" class="form-control">
+                                    <input type='password' name="password" id="password" id="password" class="form-control">
                                 </div>
                                 <div class="col-12">
                                     <label for="confirm" class="form-label">Confirm Password</label>
-                                    <input name="confirm" id="confirm" id="confirm" class="form-control">
+                                    <input type='password' name="confirm" id="confirm" id="confirm" class="form-control">
                                 </div>
                                 <button class="btn btn-success">Register</button>
                             </div>
