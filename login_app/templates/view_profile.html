@@ -30,9 +30,10 @@
                     <div class='col'>
                         <h3>{{user.first_name}} Snip's</h3>
                         {% for snip in user.user_snippit.all %}
-                            <ul>
-                                <li>{{snip.title}}</li>
-                            </ul>
+                            <div class="img_con">
+                                <a href="/show_snippit/{{snip.id}}"><img src="{{snip.image}}" alt="Avatar" class="image"></a>
+                                <div class="overlay">{{snip.title}}</div>
+                            </div> 
                         {% endfor %}
                     </div>
                     <div class='col'>

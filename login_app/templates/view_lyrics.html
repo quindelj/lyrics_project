@@ -27,6 +27,14 @@
                         </span>
                     </div>
                 </nav>
+                <div class='search' id='search'>
+                    <form action="/search_list" method="POST">
+                        {% csrf_token %}
+                        <input class="form control col-10" type="search" name="search" placeholder="Search..">
+                        <input type="submit" class="btn " value="Submit Button">
+                    </form>
+                    
+                </div>
                 <div class='song_info'>
                     <img src="{{song_id.song.song_art_image_thumbnail_url}}" alt="{{song_id.song.album.full_title}}">
                     <div class="song_text">
@@ -38,11 +46,12 @@
                 
                 <hr>
                 <div class="lyric">
+                    
                     <p>{{lyrics}}</p>
                 </div> 
                 <div class="snip" id='snip'>
                     <div class="col-sm-12 col-md-8">
-                        <form action="create_snip/{{snippit.id}}" method="POST">
+                        <form action="/create_snip" method="POST">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="snippit">Snippit:</label>
@@ -58,11 +67,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="album">Album:</label>
-                                <input class="form-control" type="text" name="title" value="{{song_id.song.album.name}}">
+                                <input class="form-control" type="text" name="album" value="{{song_id.song.album.name}}">
                             </div>
                             <div class="form-group">
                                 <label for="snip_img">Image URL:</label>
-                                <input type="snip_img" class="form-control" name="snip_img" value="{{song_id.song.song_art_image_thumbnail_url}}">
+                                <input type="snip_img" class="form-control" name="image" value="{{song_id.song.song_art_image_thumbnail_url}}">
                             </div>
                             <button class="snippit" id='snippit' type="submit">Snip</button>
                         </form>

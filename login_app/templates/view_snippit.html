@@ -30,16 +30,21 @@
                 <div class='snip_info'>
                     
                         <img src="{{snippit.image}}" alt="{{snippit.title}}">
-                        <h2>{{snippit.title}}</h2>
-                        <h3>{{snippit.artist}}</h3>
-                        <h3>{{snippit.album}}</h3>
-                        
+                        <div class="snip_text">
+                            <h2>{{snippit.title}}</h2>
+                            <h3>{{snippit.artist}}</h3>
+                            <h3>{{snippit.album}}</h3>
+                            <a href="">Like</a>
+                        </div>
                     
                 </div>
                 
                 <hr>
                 <div class="lyric">
-                    <p>{{snippit.snippit}}</p>
+                    <p>{{snippit}}</p>
+                    {% if user.id == user.id %}
+                        <a href=''>Edit</a> | <a href=''>Delete</a>
+                    {% endif %}
                 </div> 
             </div>
         </div>

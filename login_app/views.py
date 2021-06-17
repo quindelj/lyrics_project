@@ -47,6 +47,7 @@ def home(request):
     user = User.objects.get(id=request.session['user_id'])
     context = {
         'user': user,
+        'snippits' : Snippit.objects.all()
     }
     return render(request, 'home.html', context)
 
@@ -91,7 +92,7 @@ def view_lyrics(request, id):
     lyrics = genius.lyrics(id)
     
     user = User.objects.get(id=request.session['user_id'])
-    #print(user.id)
+    #print(lyrics)
     
     return render(request,"view_lyrics.html",{'lyrics':lyrics, 'song_id':song_id, 'user':user})
 
@@ -138,7 +139,7 @@ def top(request):
 
 
 #snips
-def create_snippit(request, id):
+def create_snippit(request):
     Snippit.objects.create(
         snippit = request.POST['snippit'],
         artist = request.POST['artist'],
@@ -147,12 +148,19 @@ def create_snippit(request, id):
         image = request.POST['image'],
         poster = User.objects.get(id=request.session['user_id'])
     )
-    return redirect(f'/show_snippit{id}')
+    messages.success(request,"Snippit Created!")
+    return redirect('{{ request.get_full_path }}')
 
 def show_snippit(request, snippit_id):
-    context = {
-        'user_snippit': Snippit.objects.get(id=snippit_id),
-        'user': User.objects.get(id=request.session['user_id'])
-    }
-    return render(request, 'show_snippit.html', context)
+    
+    snippit = Snippit.objects.get(id=snippit_id),
+    user =  User.objects.get(id=request.session['user_id'])
+    print(snippit)
+    return render(request, 'view_snippit.html', {'snippit': snippit, 'user':user})
+
+def like_snippit(request, snippit_id):
+    snippit = Snippit.objects.get(id=snippit_id),
+    user_like =  User.objects.get(id=request.session['user_id'])
+    snippit.like.add(user_like)
+    return render(f'/view_snippit/{snippit_id}')
 
