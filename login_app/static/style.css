@@ -47,6 +47,9 @@ h2{
     color: #65CCB8;
     font-size: 80px;
 }
+h3{
+    color: #f2f2f2;
+}
 hr{
     height: 4px;
     color: #4ecca3;
@@ -117,7 +120,15 @@ a:active{
     color: #f2f2f2;
     background-color: #4ecca3;
 }
-
+ul.messages {
+    list-style: none;
+}
+li.error {
+    color: firebrick;
+}
+li.success {
+    color: forestgreen;
+}
 /*@media only screen and (max-width:500px){
     .navbar, .img_con{
         width: 100%;

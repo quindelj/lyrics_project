@@ -54,12 +54,6 @@ class User(models.Model):
 
     objects = UserManager()
 
-class Favs(models.Model):
-    song_id = models.CharField(max_length=45)
-    fav = models.ManyToManyField(User, related_name='user_favs')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
 class Comment(models.Model):
     comment = models.CharField(max_length=225)
     poster = models.ForeignKey(User, related_name="user_message",on_delete = models.CASCADE)
@@ -74,20 +68,17 @@ class Reply(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-class Lyric(models.Model):
-    lyric = models.TextField()
+class Snippit(models.Model):
+    snippit = models.TextField()
     artist = models.CharField(max_length=225)
     title = models.CharField(max_length=225)
     album = models.CharField(max_length=225)
-    #image = models.ImageField(upload_to=upload_to, blank=True, null=True)
-    like = models.ManyToManyField(User, related_name='user_fav')
+    image = models.CharField(max_length=225)
+    poster = models.ForeignKey(User, related_name='user_snippit',on_delete = models.CASCADE)
+    comment = models.ForeignKey(Comment, related_name='snip_comm', on_delete= models.CASCADE, blank=True, null=True)
+    like = models.ManyToManyField(User, related_name='user_like')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-class Genius(models.Model):
-    lyricsgenius = models.ManyToManyField(User, related_name='faved')
-    like = models.ManyToManyField(User, related_name='fav')
-
 
 
 # Create your models here.

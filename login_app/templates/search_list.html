@@ -13,66 +13,71 @@
         <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     </head>
     <body>
-        <div class="container">
-            <nav class="navbar navbar-expand lg navbar-dark bg-success">
-                <div class="container-fluid">
-                    <h1>Lyrical</h1>
-                    <a href="/home">Home</a>
-                    <span class="navbar-text">
-                        <h1>Welcome,</h1>
-                        <a href="/logout">Log Out</a> | <a href="/profile">Profile</a>
-                    </span>
+        <div class="wrapper">
+            <div class="container">
+                <nav class="navbar ">
+                    <div class="container-fluid">
+                        <h1>SnipIT</h1>
+                        <a href="/home">Home</a>
+                        <a href="/top">Top Charts</a>
+                        <a href="/all_time">Most Popular</a>
+                        <span class="navbar-text">
+                            <h1>Welcome,{{user.first_name}}</h1>
+                            <a href="/logout">Log Out</a> | <a href="/view_profile/{{user.id}}">Profile</a>
+                        </span>
+                    </div>
+                </nav>
+                <div class='search' id='search'>
+                    <form action="search_list" method="POST">
+                        {% csrf_token %}
+                        <input class="form control col-10" type="search" name="search" placeholder="Search..">
+                        <input type="submit" class="btn btn-info" value="Submit Button">
+                    </form>
+                    
                 </div>
-            </nav>
-            <div class='search' id='search'>
-                <form action="search_list" method="POST">
-                    {% csrf_token %}
-                    <input class="form control col-10" type="search" name="search" placeholder="Search..">
-                    <input type="submit" class="btn btn-info" value="Submit Button">
-                </form>
-                
-            </div>
-            <div class='col-10 align-content-stretch flex-wrap' id='display' >
-                <div class="list">
-                    <div class="img_con">
-                        <a href="/view_lyrics/{{response.hits.0.result.id}}"><img src="{{response.hits.0.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
-                        <div class="overlay">{{response.hits.0.result.full_title}}</div>
-                    </div>
-                    <div class="img_con">
-                        <a href="/view_lyrics/{{response.hits.1.result.id}}"><img src="{{response.hits.1.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
-                        <div class="overlay">{{response.hits.1.result.full_title}}</div>
-                    </div>
-                    <div class="img_con">
-                        <a href="/view_lyrics/{{response.hits.2.result.id}}"><img src="{{response.hits.2.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
-                        <div class="overlay">{{response.hits.2.result.full_title}}</div>
-                    </div>
-                    <div class="img_con">
-                        <a href="/view_lyrics/{{response.hits.3.result.id}}"><img src="{{response.hits.3.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
-                        <div class="overlay">{{response.hits.3.result.full_title}}</div>
-                    </div>
-                    <div class="img_con">
-                        <a href="/view_lyrics/{{response.hits.4.result.id}}"><img src="{{response.hits.4.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
-                        <div class="overlay">{{response.hits.4.result.full_title}}</div>
-                    </div>
-                    <div class="img_con">
-                        <a href="/view_lyrics/{{response.hits.5.result.id}}"><img src="{{response.hits.5.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
-                        <div class="overlay">{{response.hits.5.result.full_title}}</div>
-                    </div>
-                    <div class="img_con">
-                        <a href="/view_lyrics/{{response.hits.6.result.id}}"><img src="{{response.hits.6.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
-                        <div class="overlay">{{response.hits.6.result.full_title}}</div>
-                    </div>
-                    <div class="img_con">
-                        <a href="/view_lyrics/{{response.hits.7.result.id}}"><img src="{{response.hits.7.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
-                        <div class="overlay">{{response.hits.7.result.full_title}}</div>
-                    </div>
-                    <div class="img_con">
-                        <a href="/view_lyrics/{{response.hits.8.result.id}}"><img src="{{response.hits.8.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
-                        <div class="overlay">{{response.hits.8.result.full_title}}</div>
-                    </div>
-                    <div class="img_con">
-                        <a href="/view_lyrics/{{response.hits.9.result.id}}"><img src="{{response.hits.9.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
-                        <div class="overlay">{{response.hits.9.result.full_title}}</div>
+                <div class='col-10 align-content-stretch flex-wrap' id='display' >
+                    <div class="list">
+                        {% for song in response %}
+                        <div class="img_con">
+                            <a href="/view_lyrics/{{response.hits.0.result.id}}"><img src="{{response.hits.0.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
+                            <div class="overlay">{{response.hits.0.result.full_title}}</div>
+                        </div>
+                        <div class="img_con">
+                            <a href="/view_lyrics/{{response.hits.1.result.id}}"><img src="{{response.hits.1.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
+                            <div class="overlay">{{response.hits.1.result.full_title}}</div>
+                        </div>
+                        <div class="img_con">
+                            <a href="/view_lyrics/{{response.hits.2.result.id}}"><img src="{{response.hits.2.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
+                            <div class="overlay">{{response.hits.2.result.full_title}}</div>
+                        </div>
+                        <div class="img_con">
+                            <a href="/view_lyrics/{{response.hits.3.result.id}}"><img src="{{response.hits.3.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
+                            <div class="overlay">{{response.hits.3.result.full_title}}</div>
+                        </div>
+                        <div class="img_con">
+                            <a href="/view_lyrics/{{response.hits.4.result.id}}"><img src="{{response.hits.4.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
+                            <div class="overlay">{{response.hits.4.result.full_title}}</div>
+                        </div>
+                        <div class="img_con">
+                            <a href="/view_lyrics/{{response.hits.5.result.id}}"><img src="{{response.hits.5.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
+                            <div class="overlay">{{response.hits.5.result.full_title}}</div>
+                        </div>
+                        <div class="img_con">
+                            <a href="/view_lyrics/{{response.hits.6.result.id}}"><img src="{{response.hits.6.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
+                            <div class="overlay">{{response.hits.6.result.full_title}}</div>
+                        </div>
+                        <div class="img_con">
+                            <a href="/view_lyrics/{{response.hits.7.result.id}}"><img src="{{response.hits.7.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
+                            <div class="overlay">{{response.hits.7.result.full_title}}</div>
+                        </div>
+                        <div class="img_con">
+                            <a href="/view_lyrics/{{response.hits.8.result.id}}"><img src="{{response.hits.8.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
+                            <div class="overlay">{{response.hits.8.result.full_title}}</div>
+                        </div>
+                        <div class="img_con">
+                            <a href="/view_lyrics/{{response.hits.9.result.id}}"><img src="{{response.hits.9.result.header_image_thumbnail_url}}" alt="Avatar" class="image"></a>
+                            <div class="overlay">{{response.hits.9.result.full_title}}</div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
