@@ -37,7 +37,7 @@
                 </div>
                 <div class="row">
                     <div class='col'>
-                        {% for snippit in snippits %}
+                        {% for snippit in snippits reversed %}
                         <div class="img_con">
                             <a href="/show_snippit/{{snippit.id}}"><img src="{{snippit.image}}" alt="Avatar" class="image"></a>
                             <div class="overlay">{{snippit.title}}</div>

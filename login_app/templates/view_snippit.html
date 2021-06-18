@@ -31,9 +31,10 @@
                     
                         <img src="{{snippit.image}}" alt="{{snippit.title}}">
                         <div class="snip_text">
-                            <h2>{{snippit.title}}</h2>
+                            <h2>{{snippit_id.title}}</h2>
                             <h3>{{snippit.artist}}</h3>
                             <h3>{{snippit.album}}</h3>
+                            <h4>Snip by : <a href="/view_profile/{{snippit.poster.id}}">{{snippit.poster.first_name}}</a></h4>
                             <a href="">Like</a>
                         </div>
                     
@@ -41,8 +42,8 @@
                 
                 <hr>
                 <div class="lyric">
-                    <p>{{snippit}}</p>
-                    {% if user.id == user.id %}
+                    <p>{{snippit.snippit}}</p>
+                    {% if snippit.poster.id == user.id %}
                         <a href=''>Edit</a> | <a href=''>Delete</a>
                     {% endif %}
                 </div> 

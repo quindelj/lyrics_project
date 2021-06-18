@@ -149,14 +149,17 @@ def create_snippit(request):
         poster = User.objects.get(id=request.session['user_id'])
     )
     messages.success(request,"Snippit Created!")
-    return redirect('{{ request.get_full_path }}')
+    return redirect('/home')
 
 def show_snippit(request, snippit_id):
     
     snippit = Snippit.objects.get(id=snippit_id),
     user =  User.objects.get(id=request.session['user_id'])
-    print(snippit)
-    return render(request, 'view_snippit.html', {'snippit': snippit, 'user':user})
+    context = {
+        'snippit' : snippit
+    }
+    print(snippit.id)
+    return render(request, 'view_snippit.html',context, {'user':user})
 
 def like_snippit(request, snippit_id):
     snippit = Snippit.objects.get(id=snippit_id),
