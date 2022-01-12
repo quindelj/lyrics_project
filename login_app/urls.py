@@ -21,7 +21,7 @@ urlpatterns = [
 
     path('create_snip', views.create_snippit),
     path('show_snippit/<int:snippit_id>', views.show_snippit),
-    path('like_snippit/<int:snipit_id>', views.like_snippit),
+    path('like_snippit/<int:id>', views.like_snippit),
     #path('edit_snippt/<int:snippit_id>', views.edit_snipppit),
     #path('update_snippit/<int:snippit_id>', views.update_snippit),
     #path('delete_snippit/<int:snippit_id>', views.delete_snippit),

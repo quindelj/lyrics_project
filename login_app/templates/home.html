@@ -40,7 +40,13 @@
                         {% for snippit in snippits reversed %}
                         <div class="img_con">
                             <a href="/show_snippit/{{snippit.id}}"><img src="{{snippit.image}}" alt="Avatar" class="image"></a>
-                            <div class="overlay">{{snippit.title}}</div>
+                            <div class="overlay">
+                                {{snippit.title}}
+                                <a href="/like_snippit/{{snippit.id}}">Like</a>
+                                {{snippit.like.count}}
+                            </div>
+                            <p>{{snippit.snippit}}</p>
+                            
                         </div> 
                         {% endfor %}
                     </div>

@@ -76,9 +76,29 @@ class Snippit(models.Model):
     image = models.CharField(max_length=225)
     poster = models.ForeignKey(User, related_name='user_snippit',on_delete = models.CASCADE)
     comment = models.ForeignKey(Comment, related_name='snip_comm', on_delete= models.CASCADE, blank=True, null=True)
-    like = models.ManyToManyField(User, related_name='user_like')
+    liked = models.ManyToManyField(User, default = None, blank = True, related_name='user_like')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return str(self.title)
+
+    @property
+    def num_likes(self):
+        return self.liked.all().count()
+
+LIKE_CHOICES = (
+    ('Like', 'Like'),
+    ('Unlike', 'Unlike'),
+)
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    snip = models.ForeignKey(Snippit, on_delete=models.CASCADE)
+    value = models.CharField(choices = LIKE_CHOICES, default='Like', max_length=10)
+    #created_at = models.DateTimeField(auto_now_add=True)
+    #updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.snip)
 
 # Create your models here.

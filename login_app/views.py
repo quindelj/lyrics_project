@@ -158,12 +158,12 @@ def show_snippit(request, snippit_id):
     context = {
         'snippit' : snippit
     }
-    print(snippit.id)
+    #print(context, user)
     return render(request, 'view_snippit.html',context, {'user':user})
 
-def like_snippit(request, snippit_id):
-    snippit = Snippit.objects.get(id=snippit_id),
+def like_snippit(request, id):
+    like = Snippit.objects.get(id=id),
     user_like =  User.objects.get(id=request.session['user_id'])
-    snippit.like.add(user_like)
-    return render(f'/view_snippit/{snippit_id}')
+    user_like.like.add(like)
+    return render('/home')
 
