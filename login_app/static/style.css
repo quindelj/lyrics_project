@@ -38,7 +38,7 @@
 }
 
 .container{
-    background-color:#232931;
+    background-color:#7aaf9b;
 }
 .lyric, label, p{
     color: #f2f2f2;
@@ -139,4 +139,6 @@ li.success {
     .song_info.img{
         width: 100%;
     }
+
+    background-color:#232931;
 }*/

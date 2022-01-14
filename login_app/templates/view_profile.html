@@ -21,7 +21,7 @@
                         <a href="/top">Top Charts</a>
                         <a href="/all_time">Most Popular</a>
                         <span class="navbar-text">
-                            <h1>Welcome,{{user.first_name}}</h1>
+                            <h1>Welcome,{{user.sUser_id.first_name}}</h1>
                             <a href="/logout">Log Out</a> | <a href="/view_profile/{{user.id}}">Profile</a> {% if user.id == user.id %} | <a href="/edit_profile/{{user.id}}">Edit</a> {% endif  %}
                         </span>
                     </div>

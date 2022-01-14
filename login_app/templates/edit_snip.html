@@ -28,23 +28,46 @@
                     </div>
                 </nav>
                 <div class='snip_info'>
-                    <img src="{{snippit.image}}" alt="{{snippit.title}}">
-                    <div class="snip_text">
-                        <h2>{{snippit.title}}</h2>
-                        <h3>{{snippit.artist}}</h3>
-                        <h3>{{snippit.album}}</h3>
-                        <h3>{{snippit.snippit.title}}</h3>
-                        <h4>Snip by : <a href="/view_profile/{{snippit.poster.id}}">{{snippit.poster.first_name}}</a></h4>
-                        <a href="">Like</a>
+                    
+                        <img src="{{snip.image}}" alt="{{snip.title}}">
+                        <div class="snip_text">
+                            <h2>{{snip.title}}</h2>
+                            <h3>{{snip.artist}}</h3>
+                            <h3>{{anip.album}}</h3>
+                            <h3>{{snip.snippit}}</h3>
+                        </div>
+                    
+                </div>
+                
+                <hr>
+                <div class="snip" id='snip'>
+                    <div class="col-sm-12 col-md-8">
+                        <form action="/update_snippit/{{snip.id}}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="snippit">Snippit:</label>
+                                <textarea class="form-control" type="text" name="snippit" value="{{snip.snippit}}"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="artist">Artist:</label>
+                                <input class="form-control" type="text" name="artist" value="{{snip.artist}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="title">Title:</label>
+                                <input class="form-control" type="text" name="title" value="{{snip.title}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="album">Album:</label>
+                                <input class="form-control" type="text" name="album" value="{{snip.album}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="snip_img">Image URL:</label>
+                                <input type="snip_img" class="form-control" name="image" value="{{snip.image}}">
+                            </div>
+                            <button class="btn btn-primary my-1" type="submit">Submit Changes</button>
+                        </form>
                     </div>
                 </div>
-                <div class="lyric">
-                    {% if snippit.poster.id == user.id %}
-                        <a href='/edit_snip/{{snippit.id}}'>Edit</a> | <a href=''>Delete</a>
-                    {% endif %}
-                </div> 
-                <hr>
-                
             </div>
         </div>
         

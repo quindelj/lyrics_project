@@ -56,6 +56,7 @@ def home(request):
 def profile(request, id):
     user = User.objects.get(id=id)
     user_snippit = Snippit.objects.filter(poster=user)
+    #sUser_id = User.objects.get(id=request.session['sUser_id'])
     print(user_snippit)
     return render(request, 'view_profile.html', {'user': user, 'user_snippit': user_snippit})
 
@@ -153,17 +154,39 @@ def create_snippit(request):
 
 def show_snippit(request, snippit_id):
     
-    snippit = Snippit.objects.get(id=snippit_id),
+    #snippit = Snippit.objects.get(id=snippit_id),
     user =  User.objects.get(id=request.session['user_id'])
     context = {
-        'snippit' : snippit
+        'snippit' : Snippit.objects.get(id=snippit_id),
+        'user' : user
     }
-    #print(context, user)
-    return render(request, 'view_snippit.html',context, {'user':user})
+    return render(request, 'view_snippit.html',context)
+    #return render(request, 'view_snippit.html', {'user':user, 'snippit':snippit})
+
 
 def like_snippit(request, id):
     like = Snippit.objects.get(id=id),
     user_like =  User.objects.get(id=request.session['user_id'])
-    user_like.like.add(like)
+    user_like.liked.add(like)
     return render('/home')
 
+def edit_snipppit(request, snippit_id):
+    context = {
+        'snip': Snippit.objects.get(id=snippit_id)
+    }
+    return render(request, 'edit_snip.html', context)
+
+def update_snippit(request, snippit_id):
+    edit_snip = Snippit.objects.get(id=snippit_id)
+    edit_snip.snippit = request.POST['snippit']
+    edit_snip.artist = request.POST['artist']
+    edit_snip.title = request.POST['title']
+    edit_snip.album = request.POST['album']
+    edit_snip.image = request.POST['image']
+    edit_snip.save()
+    return redirect(f'/edit_snip/{snippit_id}')
+
+def delete_profile(request, id):
+    delete_user = User.objects.get(id=id)
+    delete_user.delete()
+    return redirect('/')
