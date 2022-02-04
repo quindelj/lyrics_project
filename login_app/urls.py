@@ -24,5 +24,5 @@ urlpatterns = [
     path('like_snippit/<int:id>', views.like_snippit),
     path('edit_snip/<int:snippit_id>', views.edit_snipppit),
     path('update_snippit/<int:snippit_id>', views.update_snippit),
-    #path('delete_snippit/<int:snippit_id>', views.delete_snippit),
+    path('delete_snippit/<int:snippit_id>', views.delete_snippit),
 ]

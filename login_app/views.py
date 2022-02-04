@@ -9,7 +9,7 @@ import json
 #log/reg
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'home.html')
 
 def register(request):
     if request.method == "GET":
@@ -18,12 +18,12 @@ def register(request):
     if errors:
         for error in errors.values():
             messages.error(request, error)
-        return redirect('/')
+        return redirect('/register')
     else:
         new_user = User.objects.register(request.POST)
         request.session['user_id'] = new_user.id
         messages.success(request, "You have successfully registered!")
-        return redirect('/')
+        return redirect('/home')
 
 def login(request):
     if request.method == "GET":
@@ -42,7 +42,10 @@ def logout(request):
 
 def home(request):
     if 'user_id' not in request.session:
-        return redirect('/')
+        context = {
+        'snippits' : Snippit.objects.all()
+    }
+        return render(request, 'home.html', context)
     
     user = User.objects.get(id=request.session['user_id'])
     context = {
@@ -85,7 +88,11 @@ def delete_profile(request, id):
 
 def view_lyrics(request, id):
     genius = lyricsgenius.Genius('q3Hg0dfLarYZXLJpKIqTTQv1aF86ekG4-Dy9D8wnh8zwuykSjauy_WJ66z7oCt6L')
-    
+    if 'user_id' not in request.session:
+        song_id = genius.song(id )
+        id = song_id['song']['id']     
+        lyrics = genius.lyrics(id)
+        return render(request,"view_lyrics.html",{'lyrics':lyrics, 'song_id':song_id})
     song_id = genius.song(id )
     id = song_id['song']['id'] 
     #print(json.dumps(song_id, sort_keys=False, indent=4))
@@ -105,7 +112,9 @@ def search(request):
             self.search_term=''
             self.per_page=10,
             self.page=2,
-            
+        if 'user_id' not in request.session:
+            response = genius.search(search, per_page=10, page=1)
+            return render(request, 'search_list.html', {'response':response, 'search':search})
         response = genius.search(search, per_page=10, page=1)
         user = User.objects.get(id=request.session['user_id'])
         #print(json.dumps(response, sort_keys=False, indent=4))
@@ -119,6 +128,10 @@ def all_time(request):
         self.per_page= 20,
         self.type_='song'
         pass
+    if 'user_id' not in request.session:
+        response = genius.charts(time_period='day',chart_genre='all',per_page=20)
+        return render(request, 'charts.html',{'response':response})
+
     response = genius.charts(time_period='all_time',chart_genre='all',per_page=20)
     user = User.objects.get(id=request.session['user_id'])
     #print(json.dumps(['chart_item'][0], sort_keys=False, indent=4))
@@ -132,6 +145,10 @@ def top(request):
         self.per_page= 20,
         self.type_='song'
         pass
+    if 'user_id' not in request.session:
+        response = genius.charts(time_period='day',chart_genre='all',per_page=20)
+        return render(request, 'charts.html',{'response':response})
+    
     response = genius.charts(time_period='day',chart_genre='all',per_page=20)
     user = User.objects.get(id=request.session['user_id'])
     #print(json.dumps(['chart_item'][0], sort_keys=False, indent=4))
@@ -153,8 +170,12 @@ def create_snippit(request):
     return redirect('/home')
 
 def show_snippit(request, snippit_id):
-    
-    #snippit = Snippit.objects.get(id=snippit_id),
+    if 'user_id' not in request.session:
+        context = {
+        'snippit' : Snippit.objects.get(id=snippit_id)
+    }
+        return render(request, 'view_snippit.html',context)
+
     user =  User.objects.get(id=request.session['user_id'])
     context = {
         'snippit' : Snippit.objects.get(id=snippit_id),
@@ -165,9 +186,15 @@ def show_snippit(request, snippit_id):
 
 
 def like_snippit(request, id):
+    if 'user_id' not in request.session:
+        context = {
+        
+    }
+        return render(request, 'view_snippit.html',context)
+        
     like = Snippit.objects.get(id=id),
     user_like =  User.objects.get(id=request.session['user_id'])
-    user_like.liked.add(like)
+    like.user_like.add(user_like)
     return render('/home')
 
 def edit_snipppit(request, snippit_id):
@@ -186,7 +213,7 @@ def update_snippit(request, snippit_id):
     edit_snip.save()
     return redirect(f'/edit_snip/{snippit_id}')
 
-def delete_profile(request, id):
-    delete_user = User.objects.get(id=id)
-    delete_user.delete()
-    return redirect('/')
+def delete_snippit(request, snippit_id):
+    delete_snip = Snippit.objects.get(id=snippit_id)
+    delete_snip.delete()
+    return redirect('/home')

@@ -47,7 +47,7 @@
                 <hr>
                 <div class="lyric">
                     
-                    <p>{{lyrics}}</p>
+                    <p class="lyrics" id="lyrics" onselect="makeSnip()">{{lyrics}}</p>
                 </div> 
                 <div class="snip" id='snip'>
                     <div class="col-sm-12 col-md-8">
@@ -55,7 +55,7 @@
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="snippit">Snippit:</label>
-                                <textarea class="form-control" type="text" name="snippit"></textarea>
+                                <textarea class="form-control" type="text" name="snippit" id="lyric_text"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="artist">Artist:</label>
@@ -73,7 +73,7 @@
                                 <label for="snip_img">Image URL:</label>
                                 <input type="snip_img" class="form-control" name="image" value="{{song_id.song.song_art_image_thumbnail_url}}">
                             </div>
-                            <button class="snippit" id='snippit' type="submit">Snip</button>
+                            <button class="snippit" id='snippit' type="submit" onselect="makeSnip()">Snip</button>
                         </form>
                     </div>
                 </div>
@@ -85,6 +85,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="{% static 'js/main.js' %}" async defer></script>
+        <script src="{% static 'main.js' %}" async defer></script>
     </body>
 </html>

@@ -22,8 +22,13 @@
                         <a href="/top">Top Charts</a>
                         <a href="/all_time">Most Popular</a>
                         <span class="navbar-text">
+                            {% if 'user_id' not in request.session %}
+                                <h1>Welcome</h1>
+                                <a href="/login">Login</a> 
+                            {% else %}
                             <h1>Welcome,{{user.first_name}}</h1>
                             <a href="/logout">Log Out</a> | <a href="/view_profile/{{user.id}}">Profile</a>
+                            {% endif %}
                         </span>
                     </div>
                 </nav>
@@ -33,17 +38,19 @@
                         <h2>{{snippit.title}}</h2>
                         <h3>{{snippit.artist}}</h3>
                         <h3>{{snippit.album}}</h3>
-                        <h3>{{snippit.snippit.title}}</h3>
-                        <h4>Snip by : <a href="/view_profile/{{snippit.poster.id}}">{{snippit.poster.first_name}}</a></h4>
-                        <a href="">Like</a>
                     </div>
                 </div>
                 <div class="lyric">
+                    <hr>
+                    <h3>{{snippit.snippit}}</h3>
+                    <h4>Snip by : <a href="/view_profile/{{snippit.poster.id}}">{{snippit.poster.first_name}}</a></h4>
+                    <a href="/like_snippit/{{snippit.id}}">Like</a>
+                    {{snippit.liked.count}}
                     {% if snippit.poster.id == user.id %}
-                        <a href='/edit_snip/{{snippit.id}}'>Edit</a> | <a href=''>Delete</a>
+                        <a href='/edit_snip/{{snippit.id}}'>Edit</a> | <a href='/delete_snippit/{{snippit.id}}'>Delete</a>
                     {% endif %}
                 </div> 
-                <hr>
+                
                 
             </div>
         </div>
@@ -52,6 +59,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="{% static 'js/main.js' %}" async defer></script>
+        <script src="{% static 'main.js' %}" async defer></script>
     </body>
 </html>
