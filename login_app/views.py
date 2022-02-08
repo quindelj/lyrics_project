@@ -16,7 +16,7 @@ def index(request):
 
 def register(request):
     if request.method == "GET":
-        return redirect('/')
+        return render(request, 'register.html')
     errors = User.objects.basic_validator(request.POST)
     if errors:
         for error in errors.values():
@@ -26,18 +26,18 @@ def register(request):
         new_user = User.objects.register(request.POST)
         request.session['user_id'] = new_user.id
         messages.success(request, "You have successfully registered!")
-        return redirect('/home')
+        return redirect('/login')
 
 def login(request):
     if request.method == "GET":
-        return redirect('/')
+        return render(request, 'login.html')
     if not User.objects.authenticate(request.POST['email'], request.POST['password']):
         messages.error(request, "Invalid Email/Password")
-        return redirect('/')
+        return redirect('login.html')
     user = User.objects.get(email=request.POST['email'])
     request.session['user_id'] = user.id
     messages.success(request,"You have successfully logged in!")
-    return redirect('/home')
+    return redirect('/login')
 
 def logout(request):
     request.session.clear()
@@ -132,7 +132,7 @@ def all_time(request):
         self.type_='song'
         pass
     if 'user_id' not in request.session:
-        response = genius.charts(time_period='day',chart_genre='all',per_page=20)
+        response = genius.charts(time_period='all_time',chart_genre='all',per_page=20)
         return render(request, 'charts.html',{'response':response})
 
     response = genius.charts(time_period='all_time',chart_genre='all',per_page=20)
@@ -190,14 +190,11 @@ def show_snippit(request, snippit_id):
 
 def like_snippit(request, id):
     if 'user_id' not in request.session:
-        context = {
+        return render(request, 'view_snippit.html')
         
-    }
-        return render(request, 'view_snippit.html',context)
-        
-    like = Snippit.objects.get(id=id),
+    to_like = Snippit.objects.get(id=id),
     user_like =  User.objects.get(id=request.session['user_id'])
-    like.user_like.add(user_like)
+    to_like.liked.add(user_like)
     return render('/home')
 
 def edit_snipppit(request, snippit_id):
