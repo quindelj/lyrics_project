@@ -9,7 +9,10 @@ import json
 #log/reg
 
 def index(request):
-    return render(request, 'home.html')
+    context = {
+        'snippits' : Snippit.objects.all()
+    }
+    return render(request, 'home.html', context)
 
 def register(request):
     if request.method == "GET":

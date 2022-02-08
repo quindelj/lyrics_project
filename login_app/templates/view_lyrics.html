@@ -22,8 +22,13 @@
                         <a href="/top">Top Charts</a>
                         <a href="/all_time">Most Popular</a>
                         <span class="navbar-text">
+                            {% if 'user_id' not in request.session %}
+                                <h1>Welcome</h1>
+                                <a href="/login">Login</a> 
+                            {% else %}
                             <h1>Welcome,{{user.first_name}}</h1>
                             <a href="/logout">Log Out</a> | <a href="/view_profile/{{user.id}}">Profile</a>
+                            {% endif %}
                         </span>
                     </div>
                 </nav>
@@ -46,8 +51,7 @@
                 
                 <hr>
                 <div class="lyric">
-                    
-                    <p class="lyrics" id="lyrics" onselect="makeSnip()">{{lyrics}}</p>
+                    <p class="lyrics" id="lyrics" onclick="makeSnip()">{{lyrics}}</p>
                 </div> 
                 <div class="snip" id='snip'>
                     <div class="col-sm-12 col-md-8">
@@ -73,7 +77,7 @@
                                 <label for="snip_img">Image URL:</label>
                                 <input type="snip_img" class="form-control" name="image" value="{{song_id.song.song_art_image_thumbnail_url}}">
                             </div>
-                            <button class="snippit" id='snippit' type="submit" onselect="makeSnip()">Snip</button>
+                            <button class="snippit" id='snippit' type="submit" >Snip</button>
                         </form>
                     </div>
                 </div>

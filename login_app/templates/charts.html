@@ -22,8 +22,13 @@
                         <a href="/top">Top Charts</a>
                         <a href="/all_time">Most Popular</a>
                         <span class="navbar-text">
+                            {% if 'user_id' not in request.session %}
+                                <h1>Welcome</h1>
+                                <a href="/login">Login</a> 
+                            {% else %}
                             <h1>Welcome,{{user.first_name}}</h1>
                             <a href="/logout">Log Out</a> | <a href="/view_profile/{{user.id}}">Profile</a>
+                            {% endif %}
                         </span>
                     </div>
                 </nav>
